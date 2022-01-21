@@ -1,7 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:measured_size/measured_size.dart';
+import 'package:trello_clone/utils/data.dart';
 
 class ListDataAddSlivers extends StatefulWidget {
   const ListDataAddSlivers({Key? key}) : super(key: key);
@@ -11,11 +14,46 @@ class ListDataAddSlivers extends StatefulWidget {
 }
 
 class _ListDataAddSliversState extends State<ListDataAddSlivers> {
+
+  int i  = 0;
+  @override
+  initState() {
+
+      sampleNodes.forEach((element) {
+        print("this is the value of the i $i");
+
+        print("once");
+        var span2 = TextSpan(
+          text: element.title,
+          style: GoogleFonts.openSans(
+            fontSize: 14,
+            color: Colors.white,
+          ),
+
+        );
+
+        var tp = TextPainter(
+
+          //maxLines: 1,
+          text: span2,
+          textAlign: TextAlign.left,
+          textDirection: TextDirection.ltr,
+        );
+        tp.layout(maxWidth: 250);
+        print("This is the height that is ${tp.height}");
+        totalSize+=(tp.height+24);  // this plus 24 is estimate of the padding and the margin that is applied to the text to increase the height of the container
+        i++;
+      });
+
+  }
+
+  double totalSize = 0;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    print(totalSize);
     return Container(
-      width: size.width - 50,
+      width: size.width,
       child: CustomScrollView(
         //scrollDirection: Axis.horizontal,
         //physics: NeverScrollableScrollPhysics(),
@@ -57,20 +95,25 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
           SliverToBoxAdapter(
             child: Container(
               color: Color(0xff222222),
-              height: 300,
+              height: totalSize >  size.height-200 ? size.height -200:totalSize,
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: 20,
+                itemCount: sampleNodes.length,
                 itemBuilder: (context,index) {
-                  return Container(
-                    margin: EdgeInsets.all(7),
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Color(0xff2c2c2e),
-                    ),
-                    child: Text("this is the sample text ", style: GoogleFonts.openSans(color: Colors.white),),
-                  );
+
+
+                  return LayoutBuilder(builder: (context,constraints) {
+                    //print(constraints.maxHeight);
+                    return Container(
+                      margin: EdgeInsets.all(7),
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Color(0xff2c2c2e),
+                      ),
+                      child: Text(sampleNodes[index].title, style: GoogleFonts.openSans(color: Colors.white),),
+                    );
+                  });
                 },
               ),
             )

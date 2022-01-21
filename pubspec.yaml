@@ -19,6 +19,7 @@ dependencies:
   hive: ^2.0.4
   hive_flutter: ^1.1.0
   fluttertoast: ^8.0.8
+  measured_size: ^1.0.0
   lottie: ^1.2.1
   provider: ^6.0.2 # this package is for the state management of the application
   shimmer: ^2.0.0
