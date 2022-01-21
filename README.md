@@ -2,15 +2,16 @@
 
 A new Flutter project.
 
-## Getting Started
+Step 1 : This would be nailing the UI of the trello application make the functional UI with the help of models if needed
 
-This project is a starting point for a Flutter application.
+Step 2 : This would be using hive in the application and save all the data offline in the application
 
-A few resources to get you started if this is your first Flutter project:
+Step 3 : This would be syncing the data from HIVe to online using the Firebase Database
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+----------------------------------------------------------------------------------------------------------------
+
+Progress Check : 
+ 21 Jan 2022 === Started with basic setup of the project and then starting with the UI of the project
+ 
