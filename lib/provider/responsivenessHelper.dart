@@ -4,10 +4,19 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:trello_clone/models/list_tile_data_model.dart';
 import 'package:trello_clone/utils/data.dart';
 
+
+
+enum AppBarState {
+  Name,
+  Drag,
+  AddCard,
+}
 class ResponsiveHelp extends ChangeNotifier{
 
 
+  AppBarState appBarState = AppBarState.Name;
   double totalHeighti  = 0;
+  bool showTextField= false;
   // returns the correct space that might be needed by the text field to do its thing
   double getHeightListView(List data){
     double totalHeight = 0;
@@ -42,9 +51,22 @@ class ResponsiveHelp extends ChangeNotifier{
   }
 
   bool showArchiveThing = false;
+  bool showAddCard = false;
 
-  updateAppBar(bool local) {
-    showArchiveThing = local;
+
+  showAddCardFunc(bool local) {
+    showAddCard = local;
+    if(showAddCard  == true) {
+      appBarState = AppBarState.AddCard;
+    } else{
+      appBarState = AppBarState.Name;
+    }
+    notifyListeners();
+  }
+  updateAppBar(AppBarState data) {
+    //showArchiveThing = local;
+    appBarState=data;
+
     notifyListeners();
   }
 

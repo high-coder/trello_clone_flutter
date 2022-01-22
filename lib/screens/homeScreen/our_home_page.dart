@@ -28,19 +28,19 @@ class _OurHomeState extends State<OurHome> {
     ResponsiveHelp _responsiveHelp = Provider.of<ResponsiveHelp>(context,listen:false);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      
+      backgroundColor: Colors.lightBlue.withOpacity(0.5),
       body: SafeArea(
         child: Column(
           children: [
-            Expanded(
-              flex:2,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: staticBlue
-                ),
-                child: Consumer<ResponsiveHelp>(
-                  builder: (context,_,__) {
-                    if(_responsiveHelp.showArchiveThing== false) {
+            Container(
+              height: 70,
+              decoration: BoxDecoration(
+                color: staticBlue
+              ),
+              child: Consumer<ResponsiveHelp>(
+                builder: (context,_,__) {
+                  switch(_responsiveHelp.appBarState) {
+                    case(AppBarState.Name):
                       return Row(
                         children: [
                           IconButton(
@@ -51,32 +51,59 @@ class _OurHomeState extends State<OurHome> {
                           Text("Name of the Board", style: GoogleFonts.openSans(fontSize: 15,color:ourWhite),)
                         ],
                       );
-                    } else {
+                    case(AppBarState.Drag):
                       return DragTarget<ListTileSingleNodeModel>(
-                          builder: (context, candidates,rejects) {
-                            return Container(
-                              width: 150,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  color: addGreen,
-                                  borderRadius: BorderRadius.circular(3)
-                              ),
-                              child: Center(child: Text("Drag here to archive",style: GoogleFonts.openSans(color: ourWhite,fontSize: 15),)),
-                            );
+                        builder: (context, candidates,rejects) {
+                          return Container(
+                            width: 150,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color: addGreen,
+                                borderRadius: BorderRadius.circular(3)
+                            ),
+                            child: Center(child: Text("Drag here to archive",style: GoogleFonts.openSans(color: ourWhite,fontSize: 15),)),
+                          );
 
                         },
                         onAccept: (data) {
-                            _responsiveHelp.removeNodeFromList(instance: data, listToRemoveFrom: sampleNodes);
+                          _responsiveHelp.removeNodeFromList(instance: data, listToRemoveFrom: sampleNodes);
                           //sampleNodes.remove(data);
                           print("this is the value that we have got from the things");
                           print(data);
                           // show this at this spot and then also remove it from the top spot
                         },
                       );
-                    }
-                  },
-                )
-              ),
+                    case (AppBarState.AddCard):
+                      return Container(
+                        child: Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                _responsiveHelp.showAddCardFunc(false);
+                              },
+                              icon: Icon(Icons.cancel_outlined,color: ourWhite,),
+                            ),
+                            SizedBox(width: 20,),
+                            Text("Add Card...",style: GoogleFonts.openSans(fontSize: 15,color: ourWhite),),
+                            Spacer(flex:1),
+
+                            // enable this when the value of the text controller is not empty
+                            IconButton(
+                              icon: Icon(Icons.add,color: ourWhite,),
+                              onPressed: ()  {
+
+                              },
+                            )
+                          ],
+                        ),
+                      );
+                    default:
+                      return Container();
+                  }
+
+
+                },
+              )
             ),
             Expanded(
               flex: 20,
