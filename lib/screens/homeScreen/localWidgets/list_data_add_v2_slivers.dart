@@ -4,7 +4,11 @@ import 'dart:math' as math;
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:measured_size/measured_size.dart';
+import 'package:provider/provider.dart';
+import 'package:trello_clone/models/list_tile_data_model.dart';
+import 'package:trello_clone/provider/responsivenessHelper.dart';
 import 'package:trello_clone/utils/data.dart';
+import 'package:trello_clone/utils/staticValues.dart';
 
 class ListDataAddSlivers extends StatefulWidget {
   const ListDataAddSlivers({Key? key}) : super(key: key);
@@ -18,38 +22,16 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
   int i  = 0;
   @override
   initState() {
+    ResponsiveHelp _respInstance = Provider.of<ResponsiveHelp>(context,listen:false);
 
-      sampleNodes.forEach((element) {
-        print("this is the value of the i $i");
-
-        print("once");
-        var span2 = TextSpan(
-          text: element.title,
-          style: GoogleFonts.openSans(
-            fontSize: 14,
-            color: Colors.white,
-          ),
-
-        );
-
-        var tp = TextPainter(
-
-          //maxLines: 1,
-          text: span2,
-          textAlign: TextAlign.left,
-          textDirection: TextDirection.ltr,
-        );
-        tp.layout(maxWidth: 250);
-        print("This is the height that is ${tp.height}");
-        totalSize+=(tp.height+24);  // this plus 24 is estimate of the padding and the margin that is applied to the text to increase the height of the container
-        i++;
-      });
+    _respInstance.getHeightListView(sampleNodes);
 
   }
 
   double totalSize = 0;
   @override
   Widget build(BuildContext context) {
+    ResponsiveHelp _respInstance = Provider.of<ResponsiveHelp>(context,listen:false);
     Size size = MediaQuery.of(context).size;
     print(totalSize);
     return Container(
@@ -67,7 +49,7 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
               maxHeight: 62,
               child:  Container(
                 decoration: BoxDecoration(
-                  color: Color(0xff222222),
+                  color: lightBlack,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
@@ -94,26 +76,77 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
 
           SliverToBoxAdapter(
             child: Container(
-              color: Color(0xff222222),
-              height: totalSize >  size.height-200 ? size.height -200:totalSize,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: sampleNodes.length,
-                itemBuilder: (context,index) {
+              color: lightBlack,
+              height: _respInstance.totalHeighti >  size.height-200 ? size.height -200:_respInstance.totalHeighti,
+              child: Consumer<ResponsiveHelp>(
+                builder: (context,_,__) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: sampleNodes.length,
+                    itemBuilder: (context,index) {
+                      return LongPressDraggable<ListTileSingleNodeModel>(
+                        data: sampleNodes[index],
+                        onDragStarted: () {
+                          print("The dragging is kinda started");
+                          _respInstance.updateAppBar(true);
+                        },
+                        onDragEnd: (value) {
+                          _respInstance.updateAppBar(false);
 
+                        },
+                        onDragCompleted: () {
+                          _respInstance.updateAppBar(false);
 
-                  return LayoutBuilder(builder: (context,constraints) {
-                    //print(constraints.maxHeight);
-                    return Container(
-                      margin: EdgeInsets.all(7),
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Color(0xff2c2c2e),
-                      ),
-                      child: Text(sampleNodes[index].title, style: GoogleFonts.openSans(color: Colors.white),),
-                    );
-                  });
+                        },
+                        onDraggableCanceled: (velocity,offset) {
+                          _respInstance.updateAppBar(false);
+                        },
+                        childWhenDragging: Container(
+                          height: 43,
+                          // margin: EdgeInsets.all(7),
+                          // padding: EdgeInsets.all(5),
+                          // decoration: BoxDecoration(
+                          //   borderRadius: BorderRadius.circular(5),
+                          //   color: singleNodeColor,
+                          // ),
+                          // child: Text(sampleNodes[0].title, style: GoogleFonts.openSans(color: Colors.white),),
+                        ),
+                        feedback: Material(
+                          color: lightBlack.withOpacity(0.3),
+                          child: Container(
+                            margin: EdgeInsets.all(7),
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              // color: singleNodeColor.withOpacity(0.3),
+                            ),
+                            child: Text(
+                              sampleNodes[index].title,
+                              style: GoogleFonts.openSans(
+                                color: Colors.white,
+                                fontSize: 14,
+
+                              ),
+                              maxLines: 5,
+                            ),
+                            width: 300,
+                            //height: 30,
+//                    color: Colors.red,
+                          ),
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.all(7),
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: singleNodeColor,
+                          ),
+                          child: Text(sampleNodes[index].title, style: GoogleFonts.openSans(color: Colors.white),),
+
+                        ),
+                      );
+                    },
+                  );
                 },
               ),
             )
@@ -145,9 +178,9 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
               minHeight: 62,
               maxHeight: 62,
               child:  Container(
-                  decoration: const BoxDecoration(
-                      color: Color(0xff222222),
-                      borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                      color: lightBlack,
+                      borderRadius: const BorderRadius.only(
                         bottomRight: Radius.circular(10),
                         bottomLeft: Radius.circular(10),
                       )
@@ -158,7 +191,7 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       const Icon(Icons.add, color: Color(0xff6db05d),),
-                      Text("Add a card",style: GoogleFonts.openSans(color: Color(0xff6db05d)),),
+                      Text("Add a card",style: GoogleFonts.openSans(color: addGreen),),
                       const Icon(Icons.add_a_photo, color: Colors.white,),
                     ],
                   ),
@@ -170,6 +203,72 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
       ),
     );
   }
+
+
+
+  // ListView.builder(
+  // itemBuilder: (context, index) => buildRow(index),
+  // itemCount: trackList.length,
+  // ),
+  //
+  // Widget buildRow(int index) {
+  //   final track = trackList[index];
+  //   ListTile tile = ListTile(
+  //     title: Text('${track.getName()}'),
+  //   );
+  //   Draggable draggable = LongPressDraggable<Track>(
+  //     data: track,
+  //     axis: Axis.vertical,
+  //     maxSimultaneousDrags: 1,
+  //     child: tile,
+  //     childWhenDragging: Opacity(
+  //       opacity: 0.5,
+  //       child: tile,
+  //     ),
+  //     feedback: Material(
+  //       child: ConstrainedBox(
+  //         constraints:
+  //         BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+  //         child: tile,
+  //       ),
+  //       elevation: 4.0,
+  //     ),
+  //   );
+  //
+  //   return DragTarget<Track>(
+  //     onWillAccept: (track) {
+  //       return trackList.indexOf(track) != index;
+  //     },
+  //     onAccept: (track) {
+  //       setState(() {
+  //         int currentIndex = trackList.indexOf(track);
+  //         trackList.remove(track);
+  //         trackList.insert(currentIndex > index ? index : index - 1, track);
+  //       });
+  //     },
+  //     builder: (BuildContext context, List<Track> candidateData,
+  //         List<dynamic> rejectedData) {
+  //       return Column(
+  //         children: <Widget>[
+  //           AnimatedSize(
+  //             duration: Duration(milliseconds: 100),
+  //             vsync: this,
+  //             child: candidateData.isEmpty
+  //                 ? Container()
+  //                 : Opacity(
+  //               opacity: 0.0,
+  //               child: tile,
+  //             ),
+  //           ),
+  //           Card(
+  //             child: candidateData.isEmpty ? draggable : tile,
+  //           )
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
 }
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   Widget? newChild;

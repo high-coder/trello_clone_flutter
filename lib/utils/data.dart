@@ -25,28 +25,5 @@ List<ListTileSingleNodeModel> sampleNodes = [
   ),ListTileSingleNodeModel(
     title: "Get grocerries from the market",
     index: 2,
-  ),ListTileSingleNodeModel(
-    title: "Get grocerries from the market this is also responsible for somethings in life that are ",
-    index: 3,
-  ),ListTileSingleNodeModel(
-    title: "Get grocerries from the market",
-    index: 2,
-  ),ListTileSingleNodeModel(
-    title: "Get grocerries from the market this is also responsible for somethings in life that are ",
-    index: 3,
-  ),ListTileSingleNodeModel(
-    title: "Get grocerries from the market",
-    index: 2,
-  ),ListTileSingleNodeModel(
-    title: "Get grocerries from the market this is also responsible for somethings in life that are ",
-    index: 3,
-  ),ListTileSingleNodeModel(
-    title: "Get grocerries from the market",
-    index: 2,
-  ),ListTileSingleNodeModel(
-    title: "Get grocerries from the market this is also responsible for somethings in life that are ",
-    index: 3,
   ),
-
-
 ];

@@ -4,6 +4,6 @@
 class ListTileSingleNodeModel{
   late String title;
   late int index;   // this is the index in the list where it should be shown to the user
-
-  ListTileSingleNodeModel({required this.index,required this.title});
+  double ?heightOfNode;
+  ListTileSingleNodeModel({required this.index,required this.title,this.heightOfNode});
 }
