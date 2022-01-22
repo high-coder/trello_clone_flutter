@@ -33,7 +33,7 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
   Widget build(BuildContext context) {
     ResponsiveHelp _respInstance = Provider.of<ResponsiveHelp>(context,listen:false);
     Size size = MediaQuery.of(context).size;
-    print(totalSize);
+
     return Container(
       width: size.width,
       child: CustomScrollView(
@@ -75,80 +75,84 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
           ),
 
           SliverToBoxAdapter(
-            child: Container(
-              color: lightBlack,
-              height: _respInstance.totalHeighti >  size.height-200 ? size.height -200:_respInstance.totalHeighti,
-              child: Consumer<ResponsiveHelp>(
-                builder: (context,_,__) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: sampleNodes.length,
-                    itemBuilder: (context,index) {
-                      return LongPressDraggable<ListTileSingleNodeModel>(
-                        data: sampleNodes[index],
-                        onDragStarted: () {
-                          print("The dragging is kinda started");
-                          _respInstance.updateAppBar(true);
-                        },
-                        onDragEnd: (value) {
-                          _respInstance.updateAppBar(false);
+            child: Consumer<ResponsiveHelp>(
+              builder: (context,_,__) {
+                return Container(
+                  color: lightBlack,
+                  height: _respInstance.totalHeighti >  size.height-200 ? size.height -200:_respInstance.totalHeighti,
+                  child: Builder(
+                    builder: (context) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: sampleNodes.length,
+                        itemBuilder: (context,index) {
+                          return LongPressDraggable<ListTileSingleNodeModel>(
+                            data: sampleNodes[index],
+                            onDragStarted: () {
+                              print("The dragging is kinda started");
+                              _respInstance.updateAppBar(true);
+                            },
+                            onDragEnd: (value) {
+                              _respInstance.updateAppBar(false);
 
-                        },
-                        onDragCompleted: () {
-                          _respInstance.updateAppBar(false);
+                            },
+                            onDragCompleted: () {
+                              _respInstance.updateAppBar(false);
 
-                        },
-                        onDraggableCanceled: (velocity,offset) {
-                          _respInstance.updateAppBar(false);
-                        },
-                        childWhenDragging: Container(
-                          height: 43,
-                          // margin: EdgeInsets.all(7),
-                          // padding: EdgeInsets.all(5),
-                          // decoration: BoxDecoration(
-                          //   borderRadius: BorderRadius.circular(5),
-                          //   color: singleNodeColor,
-                          // ),
-                          // child: Text(sampleNodes[0].title, style: GoogleFonts.openSans(color: Colors.white),),
-                        ),
-                        feedback: Material(
-                          color: lightBlack.withOpacity(0.3),
-                          child: Container(
-                            margin: EdgeInsets.all(7),
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              // color: singleNodeColor.withOpacity(0.3),
+                            },
+                            onDraggableCanceled: (velocity,offset) {
+                              _respInstance.updateAppBar(false);
+                            },
+                            childWhenDragging: Container(
+                              height: 43,
+                              // margin: EdgeInsets.all(7),
+                              // padding: EdgeInsets.all(5),
+                              // decoration: BoxDecoration(
+                              //   borderRadius: BorderRadius.circular(5),
+                              //   color: singleNodeColor,
+                              // ),
+                              // child: Text(sampleNodes[0].title, style: GoogleFonts.openSans(color: Colors.white),),
                             ),
-                            child: Text(
-                              sampleNodes[index].title,
-                              style: GoogleFonts.openSans(
-                                color: Colors.white,
-                                fontSize: 14,
+                            feedback: Material(
+                              color: lightBlack.withOpacity(0.3),
+                              child: Container(
+                                margin: EdgeInsets.all(7),
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  // color: singleNodeColor.withOpacity(0.3),
+                                ),
+                                child: Text(
+                                  sampleNodes[index].title,
+                                  style: GoogleFonts.openSans(
+                                    color: Colors.white,
+                                    fontSize: 14,
 
-                              ),
-                              maxLines: 5,
-                            ),
-                            width: 300,
-                            //height: 30,
+                                  ),
+                                  maxLines: 5,
+                                ),
+                                width: 300,
+                                //height: 30,
 //                    color: Colors.red,
-                          ),
-                        ),
-                        child: Container(
-                          margin: EdgeInsets.all(7),
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: singleNodeColor,
-                          ),
-                          child: Text(sampleNodes[index].title, style: GoogleFonts.openSans(color: Colors.white),),
+                              ),
+                            ),
+                            child: Container(
+                              margin: EdgeInsets.all(7),
+                              padding: EdgeInsets.only(bottom: 5,left: 5,right: 5,top: 5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: singleNodeColor,
+                              ),
+                              child: Text(sampleNodes[index].title, style: GoogleFonts.openSans(color: Colors.white),),
 
-                        ),
+                            ),
+                          );
+                        },
                       );
                     },
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             )
           ),
           // SliverList(

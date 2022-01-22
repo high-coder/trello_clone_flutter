@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trello_clone/models/list_tile_data_model.dart';
+import 'package:trello_clone/utils/data.dart';
 
 class ResponsiveHelp extends ChangeNotifier{
 
@@ -10,7 +11,7 @@ class ResponsiveHelp extends ChangeNotifier{
   // returns the correct space that might be needed by the text field to do its thing
   double getHeightListView(List data){
     double totalHeight = 0;
-    for (var element in data) {
+    for (var element in sampleNodes) {
       var span2 = TextSpan(
         text: element.title,
         style: GoogleFonts.openSans(
@@ -27,7 +28,14 @@ class ResponsiveHelp extends ChangeNotifier{
       );
       tp.layout(maxWidth: 250);
       //print("This is the height that is ${tp.height}");
-      totalHeight+=(tp.height+24);  // this plus 24 is estimate of the padding and the margin that is applied to the text to increase the height of the container
+      if(tp.height>50) {
+        totalHeight+=(tp.height+5);
+        element.heightOfNode=tp.height+5;
+      }else {
+        totalHeight+=(tp.height+24);  // this plus 24 is estimate of the padding and the margin that is applied to the text to increase the height of the container
+        element.heightOfNode = tp.height + 24;
+
+      }
     }
     totalHeighti = totalHeight;
     return totalHeight;
@@ -44,6 +52,7 @@ class ResponsiveHelp extends ChangeNotifier{
       { required ListTileSingleNodeModel instance,
       required List<ListTileSingleNodeModel> listToRemoveFrom}) {
     listToRemoveFrom.remove(instance);
+    totalHeighti-=instance.heightOfNode!;
     getHeightListView(listToRemoveFrom);
     notifyListeners();
   }
