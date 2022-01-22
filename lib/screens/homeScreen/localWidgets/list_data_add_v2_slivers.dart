@@ -19,7 +19,6 @@ class ListDataAddSlivers extends StatefulWidget {
 
 class _ListDataAddSliversState extends State<ListDataAddSlivers> {
   int i = 0;
-  TextEditingController _cardName = TextEditingController();
   FocusNode  _cardFocus = FocusNode();
 
   @override
@@ -239,7 +238,14 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
                                           color: lightGreyAddCard,
                                         ),
                                         child: TextField(
-                                          controller: _cardName,
+                                          controller: _respInstance.cardName,
+                                          onChanged: (value) {
+                                            if(_respInstance.cardName.text.length>=1) {
+                                              _respInstance.enableSavingFunc(true);
+                                            } else {
+                                              _respInstance.enableSavingFunc(false);
+                                            }
+                                          },
                                           focusNode: _cardFocus,
                                           decoration: InputDecoration(
                                             hintText: "Card name",

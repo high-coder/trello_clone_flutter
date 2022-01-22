@@ -13,6 +13,7 @@ enum AppBarState {
 }
 class ResponsiveHelp extends ChangeNotifier{
 
+  TextEditingController cardName = TextEditingController();
 
   AppBarState appBarState = AppBarState.Name;
   double totalHeighti  = 0;
@@ -50,6 +51,8 @@ class ResponsiveHelp extends ChangeNotifier{
     return totalHeight;
   }
 
+
+
   bool showArchiveThing = false;
   bool showAddCard = false;
 
@@ -78,4 +81,18 @@ class ResponsiveHelp extends ChangeNotifier{
     getHeightListView(listToRemoveFrom);
     notifyListeners();
   }
+
+
+
+  bool enableSaving = false;
+  enableSavingFunc(bool local) {
+    if(enableSaving == local) {
+      // do nothing mate
+    } else {
+      enableSaving = local;
+      notifyListeners();
+    }
+
+  }
+
 }
