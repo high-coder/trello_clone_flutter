@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trello_clone/models/list_tile_data_model.dart';
 import 'package:trello_clone/screens/page2_demo.dart';
 
 class CurrentState extends ChangeNotifier{
@@ -25,6 +26,24 @@ class CurrentState extends ChangeNotifier{
   //   //Navigator.of(context).push(MaterialPageRoute(builder: (context) => pageName()));
   // }
 
-  
+  late ListTileSingleNodeModel currentUser;
+  late String appBarTitle;
+
+  userSelectedANode({required ListTileSingleNodeModel instance}) {
+    currentUser = instance;
+    appBarTitle = instance.title;
+  }
+
+  updateAppBarTitle(bool isTitle) {
+
+    if(isTitle) {
+      appBarTitle = "Edit Title...";
+
+    }
+    //appBarTitle = title;
+    notifyListeners();
+  }
+
+
 
 }

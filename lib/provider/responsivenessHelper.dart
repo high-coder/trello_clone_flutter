@@ -11,13 +11,24 @@ enum AppBarState {
   Drag,
   AddCard,
 }
+
+enum AppBarStateDesp{
+  Name,
+  AddDesp
+}
+
 class ResponsiveHelp extends ChangeNotifier{
 
   TextEditingController cardName = TextEditingController();
 
+
+  AppBarStateDesp appBarStateDesp = AppBarStateDesp.Name;
   AppBarState appBarState = AppBarState.Name;
   double totalHeighti  = 0;
   bool showTextField= false;
+
+
+
   // returns the correct space that might be needed by the text field to do its thing
   double getHeightListView(List data){
     double totalHeight = 0;
@@ -50,8 +61,6 @@ class ResponsiveHelp extends ChangeNotifier{
     totalHeighti = totalHeight;
     return totalHeight;
   }
-
-
 
   bool showArchiveThing = false;
   bool showAddCard = false;

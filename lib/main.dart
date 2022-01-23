@@ -27,8 +27,8 @@ class TrelloRun extends StatelessWidget {
       ],
       child:  MaterialApp(
         debugShowCheckedModeBanner: false,
-        //home: OurHome(),
-        home: DescriptionPage(),
+        home: OurHome(),
+        //home: DescriptionPage(),
         //home: Page2(),
       ),
     );

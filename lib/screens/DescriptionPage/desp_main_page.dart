@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:trello_clone/models/list_tile_data_model.dart';
+import 'package:trello_clone/provider/currentState.dart';
 import 'package:trello_clone/provider/responsivenessHelper.dart';
 import 'package:trello_clone/screens/homeScreen/localWidgets/sliver_delagate.dart';
 import 'package:trello_clone/utils/staticValues.dart';
 
 class DescriptionPage extends StatefulWidget {
+
+
+
   const DescriptionPage({Key? key}) : super(key: key);
 
   @override
@@ -17,7 +22,10 @@ class _DescriptionPageState extends State<DescriptionPage> {
 
   late ScrollController _controller;
   late ScrollController _controllerTextField;
-
+  FocusNode _titleFocus = FocusNode();
+  FocusNode _despFocus = FocusNode();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _descriptonController = TextEditingController();
   String titleAppBar =
       "A very long long text shfh dsafl lorem ikf sdfgdfbgmy name isk and i am not a tereiist and this "
       "is one of the things that i have to do in order"
@@ -32,6 +40,13 @@ class _DescriptionPageState extends State<DescriptionPage> {
     
     _controllerTextField.addListener(_scrollListenerText);
     _controller.addListener(_scrollListener);
+    CurrentState _instance = Provider.of<CurrentState>(context,listen:false);
+
+    _nameController.text = _instance.currentUser.title;
+    ResponsiveHelp _respHelp =
+    Provider.of<ResponsiveHelp>(context, listen: false);
+    _respHelp.appBarStateDesp = AppBarStateDesp.Name;
+
     super.initState();
   }
 
@@ -68,7 +83,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
     ResponsiveHelp _respHelp =
         Provider.of<ResponsiveHelp>(context, listen: false);
     Size size = MediaQuery.of(context).size;
-    
+    CurrentState _instance = Provider.of<CurrentState>(context,listen:false);
     return Scaffold(
       backgroundColor: Color(0xff222222),
       body: SafeArea(
@@ -83,54 +98,92 @@ class _DescriptionPageState extends State<DescriptionPage> {
                 listen: true,
                 minHeight: 62,
                 maxHeight: 62,
-                child: Container(
-                  padding: EdgeInsets.only(left: 11, right: 15),
-                  decoration: BoxDecoration(
-                    color:     Color(0xff252525),
-                    border: Border.all(color: Colors.black,width: 1)
+                child: Consumer<ResponsiveHelp>(
+                  builder: (context,_,__) {
 
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.cancel_outlined,
-                            color: ourWhite,
+                    switch(_respHelp.appBarStateDesp) {
+                      case (AppBarStateDesp.Name):
+                        return Container(
+                          padding: EdgeInsets.only(left: 11, right: 15),
+                          decoration: BoxDecoration(
+                              color:     Color(0xff252525),
+                              border: Border.all(color: Colors.black,width: 1)
+
                           ),
-                          onPressed: () {},
-                        ),
-                      ),
-                      Consumer<ResponsiveHelp>(
-                        builder: (context, _, __) {
-                          return Flexible(
-                            flex: 4,
-                            child: Text(
-                              _respHelp.showDesAppBar == true
-                                  ? " $titleAppBar"
-                                  : " ",
-                              style: GoogleFonts.roboto(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                color: ourWhite,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.cancel_outlined,
+                                    color: ourWhite,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
                               ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          );
-                        },
-                      ),
-                      Flexible(
-                          child: IconButton(
-                        icon: Icon(
-                          Icons.more,
-                          color: ourWhite,
-                        ),
-                        onPressed: () {},
-                      ))
-                    ],
-                  ),
+                              Consumer<ResponsiveHelp>(
+                                builder: (context, _, __) {
+                                  return Flexible(
+                                    flex: 4,
+                                    child: Text(
+                                      _respHelp.showDesAppBar == true
+                                          ? " ${_instance.currentUser.title}"
+                                          : " ",
+                                      style: GoogleFonts.roboto(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        color: ourWhite,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  );
+                                },
+                              ),
+                              Flexible(
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.more,
+                                      color: ourWhite,
+                                    ),
+                                    onPressed: () {},
+                                  ))
+                            ],
+                          ),
+                        );
+                      case (AppBarStateDesp.AddDesp):
+                        return Container(
+                          child: Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  //_respHelp.showAddCardFunc(false);]
+                                  _titleFocus.unfocus();
+                                  _despFocus.unfocus();
+                                  _respHelp.appBarStateDesp = AppBarStateDesp.Name;
+                                  _respHelp.notifyListeners();
+                                },
+                                icon: Icon(Icons.cancel_outlined,color: ourWhite,),
+                              ),
+                              const SizedBox(width: 20,),
+                              Text(_instance.appBarTitle,style: GoogleFonts.openSans(fontSize: 15,color: ourWhite),),
+                              const Spacer(flex:1),
+                              IconButton(
+                                icon: Icon(Icons.add,color:ourWhite),
+                                onPressed: ()  {
+
+                                },
+                              )
+                            ],
+                          ),
+                        );
+                      default:
+                        return Container();
+                    }
+                  },
                 ),
               ),
             ),
@@ -143,36 +196,47 @@ class _DescriptionPageState extends State<DescriptionPage> {
                 minHeight: 50.0,
                 maxHeight: size.height / 3,
                 child: Container(
-                  padding:
-                      EdgeInsets.only(top: 15, bottom: 15, left: 10, right: 10),
+                  padding: const EdgeInsets.only(top: 15, bottom: 15, left: 10, right: 10),
                   //height: size.height/3,
                   width: size.width,
-                  color:     Color(0xff252525)
-,
+                  color: const Color(0xff252525),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Spacer(
+                      const Spacer(
                         flex: 1,
                       ),
                       Consumer<ResponsiveHelp>(
                         builder: (context, _, __) {
                           return Expanded(
                             flex: 8,
-                            child: Text(
-                              _respHelp.showDesAppBar == false
-                                  ? titleAppBar
-                                  : " ",
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 20, color: ourWhite),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 5,
+                            child: TextFormField(
+                              focusNode: _titleFocus,
+                              style: GoogleFonts.montserrat(fontSize: 20, color: ourWhite),
+                              onTap: () {
+                                // here I have to change the name shown on the appBar
+                                _instance.appBarTitle = "Edit Title...";
+                                _respHelp.appBarStateDesp = AppBarStateDesp.AddDesp;
+                                _respHelp.notifyListeners();
+                              },
+                              maxLines: 8,
+                              controller: _nameController,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                disabledBorder:  InputBorder.none,
+                                focusedBorder:  UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: addGreen,
+                                        width: 3
+                                    )
+                                ),
+                              ),
                             ),
                           );
                         },
                       ),
-                      Spacer(
+                      const Spacer(
                         flex: 1,
                       ),
                       Text(
@@ -180,7 +244,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
                         style:
                             GoogleFonts.roboto(color: ourWhite, fontSize: 14),
                       ),
-                      Spacer(
+                      const Spacer(
                         flex: 1,
                       ),
                     ],
@@ -326,11 +390,15 @@ class _DescriptionPageState extends State<DescriptionPage> {
 
                 ),
                 child: TextFormField(
+                  focusNode: _despFocus,
                   scrollController: _controllerTextField,
                   onTap: () {
                     //Scrollable.ensureVisible(dataKey.currentContext!);
                     // this is going to bring the focus on the text field
                     _controller.animateTo(_controller.offset+150, duration: Duration(milliseconds: 400), curve: Curves.linear);
+                    _instance.appBarTitle = "Edit Description...";
+                    _respHelp.appBarStateDesp = AppBarStateDesp.AddDesp;
+                    _respHelp.notifyListeners();
                   },
                   onChanged: (value) {
                     //_controller.animateTo(_controller.offset+20, duration: Duration(milliseconds: 300), curve: Curves.linear,);

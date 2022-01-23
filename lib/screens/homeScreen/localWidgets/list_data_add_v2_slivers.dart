@@ -6,7 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:measured_size/measured_size.dart';
 import 'package:provider/provider.dart';
 import 'package:trello_clone/models/list_tile_data_model.dart';
+import 'package:trello_clone/provider/currentState.dart';
 import 'package:trello_clone/provider/responsivenessHelper.dart';
+import 'package:trello_clone/screens/DescriptionPage/desp_main_page.dart';
 import 'package:trello_clone/screens/homeScreen/localWidgets/sliver_delagate.dart';
 import 'package:trello_clone/utils/data.dart';
 import 'package:trello_clone/utils/staticValues.dart';
@@ -39,6 +41,7 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
         Provider.of<ResponsiveHelp>(context, listen: false);
     Size size = MediaQuery.of(context).size;
 
+    CurrentState _instance = Provider.of<CurrentState>(context,listen: false);
     return Container(
       width: size.width,
       child: CustomScrollView(
@@ -144,18 +147,25 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
 //                    color: Colors.red,
                               ),
                             ),
-                            child: Container(
-                              margin: EdgeInsets.all(7),
-                              padding: EdgeInsets.only(
-                                  bottom: 5, left: 5, right: 5, top: 5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: singleNodeColor,
-                              ),
-                              child: Text(
-                                sampleNodes[index].title,
-                                style:
-                                    GoogleFonts.openSans(color: Colors.white),
+                            child: GestureDetector(
+                              onTap: () {
+                                _instance.currentUser = sampleNodes[index];
+                                print("this istat");
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => DescriptionPage()));
+                              },
+                              child: Container(
+                                margin: EdgeInsets.all(7),
+                                padding: EdgeInsets.only(
+                                    bottom: 5, left: 5, right: 5, top: 5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: singleNodeColor,
+                                ),
+                                child: Text(
+                                  sampleNodes[index].title,
+                                  style:
+                                      GoogleFonts.openSans(color: Colors.white),
+                                ),
                               ),
                             ),
                           );
