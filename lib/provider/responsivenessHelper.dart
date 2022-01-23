@@ -55,7 +55,19 @@ class ResponsiveHelp extends ChangeNotifier{
 
   bool showArchiveThing = false;
   bool showAddCard = false;
+  bool showDesAppBar = false;
 
+
+  showDesAppBarFunc(bool local) {
+    if(showDesAppBar!=local) {
+
+      // waiting for the setstate default of the screen to be called
+      Future.delayed(Duration(milliseconds: 120)).then((value) {
+        notifyListeners();
+      });
+    }
+    showDesAppBar = local;
+  }
 
   showAddCardFunc(bool local) {
     showAddCard = local;
@@ -81,8 +93,6 @@ class ResponsiveHelp extends ChangeNotifier{
     getHeightListView(listToRemoveFrom);
     notifyListeners();
   }
-
-
 
   bool enableSaving = false;
   enableSavingFunc(bool local) {

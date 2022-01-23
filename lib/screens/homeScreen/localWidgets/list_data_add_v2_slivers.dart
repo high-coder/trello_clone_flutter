@@ -1,12 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
+
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:measured_size/measured_size.dart';
 import 'package:provider/provider.dart';
 import 'package:trello_clone/models/list_tile_data_model.dart';
 import 'package:trello_clone/provider/responsivenessHelper.dart';
+import 'package:trello_clone/screens/homeScreen/localWidgets/sliver_delagate.dart';
 import 'package:trello_clone/utils/data.dart';
 import 'package:trello_clone/utils/staticValues.dart';
 
@@ -47,7 +48,7 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
           SliverPersistentHeader(
             floating: false,
             pinned: true,
-            delegate: _SliverAppBarDelegate(
+            delegate: SliverAppBarDelegate(
               listen: true,
               minHeight: 62,
               maxHeight: 62,
@@ -309,7 +310,7 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
           SliverPersistentHeader(
             floating: false,
             pinned: true,
-            delegate: _SliverAppBarDelegate(
+            delegate: SliverAppBarDelegate(
               listen: true,
               minHeight: 62,
               maxHeight: 62,
@@ -454,63 +455,4 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
 
 }
 
-class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  Widget? newChild;
-  bool? listen = false;
 
-  _SliverAppBarDelegate({
-    required this.minHeight,
-    required this.maxHeight,
-    required this.child,
-    this.newChild,
-    this.listen,
-  });
-
-  final double minHeight;
-  double maxHeight;
-  final Widget child;
-
-  @override
-  double get minExtent => minHeight;
-
-  @override
-  double get maxExtent => math.max(maxHeight, minHeight);
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    //if(shrinkOffset)/
-    // print("===============");
-    // print(shrinkOffset);
-    // print("===============");
-
-    //print(shrinkOffset.);
-    //if()
-
-    if (listen == false) {
-      return LayoutBuilder(builder: (context, constraints) {
-        print(constraints.maxWidth);
-        print("===============");
-        print(constraints.maxHeight);
-
-        if (constraints.maxHeight > 150) {
-          return SizedBox.expand(child: child);
-        } else {
-          //maxHeight = 60;
-          return SizedBox.expand(child: newChild);
-        }
-      });
-    } else {
-      return SizedBox.expand(child: child);
-    }
-
-    // return new SizedBox.expand(child: child);
-  }
-
-  @override
-  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight ||
-        child != oldDelegate.child;
-  }
-}
