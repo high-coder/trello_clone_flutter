@@ -42,8 +42,8 @@ class _DescriptionPageState extends State<DescriptionPage> {
     _controller = ScrollController();
     _controllerTextField = ScrollController();
     
-    _controllerTextField.addListener(_scrollListenerText);
-    _controller.addListener(_scrollListener);
+   // _controllerTextField.addListener(_scrollListenerText);
+    // _controller.addListener(_scrollListener);
     CurrentState _instance = Provider.of<CurrentState>(context,listen:false);
 
     _nameController.text = _instance.currentUser.title;
@@ -64,15 +64,15 @@ class _DescriptionPageState extends State<DescriptionPage> {
   _scrollListener() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      setState(() {
-        message = "reach the bottom";
-      });
+      // setState(() {
+      //   message = "reach the bottom";
+      // });
     }
     if (_controller.offset <= _controller.position.minScrollExtent &&
         !_controller.position.outOfRange) {
-      setState(() {
-        message = "reach the top";
-      });
+      // setState(() {
+      //   message = "reach the top";
+      // });
     }
 
     print(message);
@@ -88,9 +88,11 @@ class _DescriptionPageState extends State<DescriptionPage> {
         Provider.of<ResponsiveHelp>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     CurrentState _instance = Provider.of<CurrentState>(context,listen:false);
+    print("this is whole rebuilding");
     return Scaffold(
 
-      //resizeToAvoidBottomInset: false,
+
+      resizeToAvoidBottomInset: _instance.showBottomCommentBar,
       backgroundColor:const Color(0xff222222),
         // bottomNavigationBar: Container(
         //   height: size.height/10,
@@ -157,8 +159,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
         // ),
 
       body: Scaffold(
-        //resizeToAvoidBottomInset: false,
-        bottomNavigationBar: BottomCommentBar(),
+         bottomNavigationBar: BottomCommentBar(),
         backgroundColor:const Color(0xff222222),
       //  resizeToAvoidBottomInset: false,
         body: SafeArea(

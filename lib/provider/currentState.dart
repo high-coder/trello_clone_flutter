@@ -29,6 +29,16 @@ class CurrentState extends ChangeNotifier{
   late ListTileSingleNodeModel currentUser;
   late String appBarTitle;
 
+  bool showBottomCommentBar = true;
+
+  showBottomCommentBarFunc(bool local) {
+    showBottomCommentBar = local;
+
+    notifyListeners();
+  }
+
+
+
   userSelectedANode({required ListTileSingleNodeModel instance}) {
     currentUser = instance;
     appBarTitle = instance.title;

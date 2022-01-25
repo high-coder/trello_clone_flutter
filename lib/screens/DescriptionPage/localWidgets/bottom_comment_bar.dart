@@ -47,6 +47,7 @@ class _BottomCommentBarState extends State<BottomCommentBar> {
               style: GoogleFonts.openSans(color: ourWhite,fontSize: 14),
               onTap: () {
                 // Scrollable.ensureVisible(dataKey.currentContext!);
+                _instance.showBottomCommentBarFunc(true);
               },
               onChanged: (value) {
                 if(_commentController.text.isNotEmpty) {
