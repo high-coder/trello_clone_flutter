@@ -5,7 +5,11 @@ import 'package:trello_clone/models/list_tile_data_model.dart';
 import 'package:trello_clone/provider/currentState.dart';
 import 'package:trello_clone/provider/responsivenessHelper.dart';
 import 'package:trello_clone/screens/homeScreen/localWidgets/sliver_delagate.dart';
+import 'package:trello_clone/utils/data.dart';
 import 'package:trello_clone/utils/staticValues.dart';
+
+import 'localWidgets/bottom_comment_bar.dart';
+import 'localWidgets/comment_widget.dart';
 
 class DescriptionPage extends StatefulWidget {
 
@@ -154,69 +158,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
 
       body: Scaffold(
         //resizeToAvoidBottomInset: false,
-        bottomNavigationBar: Container(
-          height: size.height/10,
-          color: const Color(0xff252525),
-          child: Row(
-            children: [
-              const Spacer(flex:1),
-
-              const Expanded(
-                flex:2,
-                child: CircleAvatar(
-                  radius: 50,
-                ),
-              ),
-              Spacer(flex:1),
-              Expanded(
-                flex: 12,
-                child: TextField(
-                  style: GoogleFonts.openSans(color: ourWhite,fontSize: 14),
-                  onTap: () {
-                    // Scrollable.ensureVisible(dataKey.currentContext!);
-                  },
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      icon:const Icon(Icons.send,color: Color(0xff8b8b8b),),
-                      onPressed: () {},
-                    ),
-                    hintStyle: GoogleFonts.openSans(fontSize: 12,color: Color(0xff8b8b8b)),
-                    hintText: "Add comment...",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide(
-                            color: Color(0xff161616),
-                            width: 2
-                        )
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide(
-                            color: Color(0xff161616),
-                            width: 2
-                        )
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide(
-                            color: Color(0xff161616),
-                            width: 2
-                        )
-                    ),
-
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
-                child: IconButton(
-                  icon: Icon(Icons.attach_file_sharp, color: ourWhite,),
-                  onPressed: () {},
-                ),
-              )
-            ],
-          ),
-        ),
+        bottomNavigationBar: BottomCommentBar(),
         backgroundColor:const Color(0xff222222),
       //  resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -516,7 +458,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
                 child: Container(
 
                   padding: EdgeInsets.all(10),
-                  height: 150,
+                  //height: 150,
                   width: size.width,
                   decoration: BoxDecoration(
                       color:     Color(0xff252525),
@@ -540,7 +482,8 @@ class _DescriptionPageState extends State<DescriptionPage> {
                     },
                     style: GoogleFonts.openSans(color: ourWhite,fontSize: 16),
                     keyboardType: TextInputType.multiline,
-                    maxLines: 10,
+                    minLines: 3,
+                    maxLines: 15,
                     decoration: InputDecoration(
                         fillColor: ourWhite,
                         //filled: true,
@@ -584,12 +527,37 @@ class _DescriptionPageState extends State<DescriptionPage> {
                 ),
               ),
 
+              // SliverToBoxAdapter(
+              //   child: Container(
+              //     color: Colors.red,
+              //     height: 600,
+              //   ),
+              // ),
+
               SliverToBoxAdapter(
-                child: Container(
-                  color: Colors.red,
-                  height: 600,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10,bottom: 10,left:13,right: 13),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("ACTIVITY",style: GoogleFonts.openSans(fontSize: 18,color: ourWhite),),
+                      IconButton(onPressed: () {}, icon: Icon(Icons.menu,color: ourWhite,)),
+                    ],
+                  ),
                 ),
-              )
+              ),
+
+              SliverList(
+
+
+                delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+
+                  return CommentWidget(commentThing: _instance.currentUser.comments![index],);
+                },
+                  childCount: _instance.currentUser.comments!= null ?_instance.currentUser.comments?.length:0,
+
+                )
+              ),
             ],
           ),
         ),

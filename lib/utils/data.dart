@@ -2,6 +2,7 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:trello_clone/models/commentsModel.dart';
 import 'package:trello_clone/models/labelsModel.dart';
 import 'package:trello_clone/models/list_tile_data_model.dart';
 
@@ -9,6 +10,17 @@ List<ListTileSingleNodeModel> sampleNodes = [
   ListTileSingleNodeModel(
     title: "Get grocerries from the market",
     index: 0,
+    comments: [
+      CommentModel(
+        comment: "this is the comment that I originally wanted to write so okey",
+        dateTime: DateTime.now(),
+      ),
+        CommentModel(
+        comment: "this is the comment that I originally wanted to write so okey",
+        dateTime: DateTime.now(),
+      ),
+
+    ]
   ),ListTileSingleNodeModel(
     title: "Get grocerries from the market",
     index: 1,
