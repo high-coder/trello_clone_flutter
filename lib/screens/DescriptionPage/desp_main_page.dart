@@ -93,7 +93,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
 
 
       resizeToAvoidBottomInset: _instance.showBottomCommentBar,
-      backgroundColor:const Color(0xff222222),
+      backgroundColor:const Color(0xff222222 ),
         // bottomNavigationBar: Container(
         //   height: size.height/10,
         //   color: const Color(0xff252525),
