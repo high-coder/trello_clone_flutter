@@ -29,7 +29,7 @@ class CurrentState extends ChangeNotifier{
   late ListTileSingleNodeModel currentUser;
   late String appBarTitle;
 
-  bool showBottomCommentBar = true;
+  bool showBottomCommentBar = false;
 
   showBottomCommentBarFunc(bool local) {
     showBottomCommentBar = local;

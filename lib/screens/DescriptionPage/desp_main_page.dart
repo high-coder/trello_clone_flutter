@@ -183,7 +183,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
                           return Container(
                             padding: EdgeInsets.only(left: 11, right: 15),
                             decoration: BoxDecoration(
-                                color:     Color(0xff252525),
+                                color: const Color(0xff252525),
                                 border: Border.all(color: Colors.black,width: 1)
 
                             ),
@@ -334,6 +334,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
               const SliverToBoxAdapter(
                 child: SizedBox(height: 15,),
               ),
+
               // this is going to be the Quick Actions Widget
               SliverToBoxAdapter(
                 child: Container(
@@ -520,14 +521,42 @@ class _DescriptionPageState extends State<DescriptionPage> {
               ),
 
 
-
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 15,),
+              ),
               // Labels will show here
               SliverToBoxAdapter(
                 child: Container(
+                  //height: 60,
+                  decoration: BoxDecoration(
+                      color:     Color(0xff252525),
+                      border: Border.all(color: Color(0xff111111),width: 1)
+                  ),
+                  padding:EdgeInsets.all(10),
+                  margin: EdgeInsets.only(top: 10,bottom: 10),
+                  child: InkWell(
+                    onTap: () {
 
+                    },
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex:2,
+                          child: Icon(Icons.wine_bar,color: ourWhite,),
+                        ),
+                        Expanded(
+                          flex:10,
+                          child: Text("Labels...",style:
+                            GoogleFonts.openSans(color: ourWhite,fontSize: 15),),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
-
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 15,),
+              ),
               // SliverToBoxAdapter(
               //   child: Container(
               //     color: Colors.red,
