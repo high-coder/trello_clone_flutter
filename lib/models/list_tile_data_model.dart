@@ -17,6 +17,11 @@ class ListTileSingleNodeModel {
   DateTime? dueDate;
   List<CommentModel>? comments = [];
 
+
+
+  /// this will just contain the ids of the labels that are
+  /// added and using this id we will compare user has selected which ones
+  List<int> ?labels = [];
   List? members = []; // not in use right now
 
   List<CheckListModel>? checkListModels = [];
@@ -31,5 +36,5 @@ class ListTileSingleNodeModel {
       this.dueDate,
       this.members,
       this.startDate,
-      this.userSelectedLabels,});
+      this.userSelectedLabels,this.labels});
 }

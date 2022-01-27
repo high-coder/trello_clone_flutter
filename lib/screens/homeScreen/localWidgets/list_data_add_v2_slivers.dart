@@ -153,7 +153,7 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
                                 print("this istat");
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => DescriptionPage()));
                               },
-                              child: Container(
+                              child: Container(width:size.width,
                                 margin: EdgeInsets.all(7),
                                 padding: EdgeInsets.only(
                                     bottom: 5, left: 5, right: 5, top: 5),
@@ -161,10 +161,51 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
                                   borderRadius: BorderRadius.circular(5),
                                   color: singleNodeColor,
                                 ),
-                                child: Text(
-                                  sampleNodes[index].title,
-                                  style:
-                                      GoogleFonts.openSans(color: Colors.white),
+
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Consumer<CurrentState>(
+                                      builder: (context,_,__) {
+
+                                        print("tinis inside here this is getting serious now and i dont know what to doi ");
+
+                                        if(sampleNodes[index].labels == null) {
+                                          return Container();
+
+                                        }
+                                        else if (sampleNodes[index].labels?.isNotEmpty ??  false) {
+                                          return Wrap(
+                                            direction: Axis.horizontal,
+                                            children: [
+                                              ...List.generate(sampleNodes[index].labels?.length ?? 0, (index2) {
+                                                return Container(
+                                                  margin: EdgeInsets.all(3),
+                                                  decoration: BoxDecoration(
+                                                    color: colorsModel[sampleNodes[index].labels![index2]].color,
+                                                    borderRadius: BorderRadius.circular(2)
+                                                  ),
+                                                  height: 23,
+                                                  width: 50,
+                                                );
+                                              })
+                                            ],
+                                          );
+
+                                        } else {
+                                          return Container();
+                                        }
+                                      },
+                                    ),
+                                    Container(
+
+                                      child: Text(
+                                        sampleNodes[index].title,
+                                        style:
+                                            GoogleFonts.openSans(color: Colors.white),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

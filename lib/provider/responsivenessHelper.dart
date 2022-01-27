@@ -4,7 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:trello_clone/models/list_tile_data_model.dart';
 import 'package:trello_clone/utils/data.dart';
 
-
+enum LabelsEnum {
+  Empty,
+  FullButNotExpanded,
+  FullExpanded,
+}
 
 enum AppBarState {
   Name,
@@ -21,11 +25,18 @@ class ResponsiveHelp extends ChangeNotifier{
 
   TextEditingController cardName = TextEditingController();
 
-
+  LabelsEnum labelsEnum= LabelsEnum.Empty;
   AppBarStateDesp appBarStateDesp = AppBarStateDesp.Name;
   AppBarState appBarState = AppBarState.Name;
   double totalHeighti  = 0;
   bool showTextField= false;
+
+
+  labelsEnumStateChange(LabelsEnum instance) {
+    // here i can change the state of the enums
+    labelsEnum = instance;
+    notifyListeners();
+  }
 
 
 

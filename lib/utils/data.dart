@@ -45,36 +45,67 @@ List<ListTileSingleNodeModel> sampleNodes = [
 
 List<LabelsModel> colorsModel = [
   LabelsModel(
+    id:0,
     color: Color(0xff61bd50),
+    selected: false,
   ),
   LabelsModel(
+    id:1,
     color: Color(0xfff1d600),
+    selected: false,
   ),
   LabelsModel(
+    id:2,
     color: Color(0xffffab49),
+    selected: false,
+
   ),
   LabelsModel(
+    id:3,
     color: Color(0xffeb5a47),
+    selected: false,
+
   ),
-  LabelsModel(
+  LabelsModel(    id:4,
+
     color: Color(0xffc377e1),
+    selected: false,
+
   ),
-  LabelsModel(
+  LabelsModel(    id:5,
+
     color: Color(0xff0079be),
+    selected: false,
+
   ),
-  LabelsModel(
+  LabelsModel(    id:6,
+
     color: Color(0xff00c1e0),
+    selected: false,
+
   ),
-  LabelsModel(
+  LabelsModel(    id:7,
+
     color: Color(0xff51e897),
-  ),LabelsModel(
+    selected: false,
+
+  ),LabelsModel(    id:8,
+
     color: Color(0xffff80cf),
+    selected: false,
+
   ),
-  LabelsModel(
+  LabelsModel(    id:9,
+
     color: Color(0xff355262),
+    selected: false,
+
   ),
-  LabelsModel(
+  LabelsModel(    id:10,
+
     color: Color(0xffb3bec4),
+    selected: false,
+
   ),
 
 

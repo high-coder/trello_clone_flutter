@@ -25,7 +25,7 @@ class TrelloRun extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CurrentState()),
         ChangeNotifierProvider(create: (context) => ResponsiveHelp()),
       ],
-      child:  MaterialApp(
+      child:  const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: OurHome(),
         //home: DescriptionPage(),

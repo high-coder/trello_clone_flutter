@@ -39,6 +39,30 @@ class CurrentState extends ChangeNotifier{
 
 
 
+  bool shouldLabelsRebuild = false;
+
+  addOrRemoveLabels(int id,bool selected) {
+    if(currentUser.labels == null) {
+      currentUser.labels = [];
+      if(selected == false) {
+        currentUser.labels?.remove(id);
+      }
+      else {
+        currentUser.labels?.add(id);
+      }
+    } else {
+      if(selected == false) {
+        currentUser.labels?.remove(id);
+      }
+      else {
+        currentUser.labels?.add(id);
+      }
+    }
+    shouldLabelsRebuild = !shouldLabelsRebuild;
+    notifyListeners();
+    print(currentUser.labels);
+  }
+
   userSelectedANode({required ListTileSingleNodeModel instance}) {
     currentUser = instance;
     appBarTitle = instance.title;

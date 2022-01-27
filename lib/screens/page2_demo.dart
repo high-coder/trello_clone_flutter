@@ -16,9 +16,9 @@ class Page2 extends StatelessWidget {
         child: ListView(
           //shrinkWrap: true,
           scrollDirection: Axis.horizontal,
+          addAutomaticKeepAlives: true,
           children: [
             Container(
-
               padding: EdgeInsets.all(30),
               child: ListDataAddSlivers(),
             ),Container(
