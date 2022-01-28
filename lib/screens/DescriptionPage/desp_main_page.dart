@@ -47,6 +47,25 @@ class _DescriptionPageState extends State<DescriptionPage> {
         Provider.of<ResponsiveHelp>(context, listen: false);
     _respHelp.appBarStateDesp = AppBarStateDesp.Name;
 
+    for (var element in colorsModel) {
+      element.selected = false;
+    }
+
+    if(_instance.currentUser.labels!=null) {
+      if(_instance.currentUser.labels?.isNotEmpty ?? false)  {
+
+        for (var element in colorsModel) {
+          _instance.currentUser.labels?.forEach((element2) {
+            if(element.id == element2) {
+              element.selected = true;
+            }
+          });
+        }
+
+
+      }
+    }
+
     super.initState();
   }
 

@@ -154,8 +154,8 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => DescriptionPage()));
                               },
                               child: Container(width:size.width,
-                                margin: EdgeInsets.all(7),
-                                padding: EdgeInsets.only(
+                                margin:const EdgeInsets.all(7),
+                                padding:const EdgeInsets.only(
                                     bottom: 5, left: 5, right: 5, top: 5),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
