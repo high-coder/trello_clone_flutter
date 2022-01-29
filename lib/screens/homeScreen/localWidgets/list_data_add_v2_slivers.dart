@@ -24,12 +24,15 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
   int i = 0;
   FocusNode  _cardFocus = FocusNode();
 
+  TextEditingController _boardTitle = TextEditingController();
+
   @override
   void initState() {
     ResponsiveHelp _respInstance =
         Provider.of<ResponsiveHelp>(context, listen: false);
 
     _respInstance.getHeightListView(sampleNodes);
+    _boardTitle.text = oneBoard.titleOfBoard;
   }
 
   //bool _respInstance.showAddCard = false;
@@ -48,43 +51,141 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
         //scrollDirection: Axis.horizontal,
         //physics: NeverScrollableScrollPhysics(),
         slivers: [
-          SliverPersistentHeader(
-            floating: false,
-            pinned: true,
-            delegate: SliverAppBarDelegate(
-              listen: true,
-              minHeight: 62,
-              maxHeight: 62,
-              child: Container(
-                decoration: BoxDecoration(
-                    color: lightBlack,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    )),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "TODO",
-                        style: GoogleFonts.openSans(
-                          color: Colors.white,
-                        ),
+
+          SliverToBoxAdapter(
+            child:  Container(
+            //margin: EdgeInsets.all(10),
+              padding:const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: lightBlack,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                )),
+              child: Padding(
+              padding: const EdgeInsets.only(left: 15.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex:10,
+                    child: TextField(
+                      minLines: 1,
+                      maxLines: 10,
+                      style: GoogleFonts.openSans(
+                        color: Colors.white,
                       ),
-                      IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.description,
-                            color: Colors.white,
-                          ))
-                    ],
+                      decoration: InputDecoration(
+                        fillColor: ourWhite,
+                        //filled: true,
+                        border: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide:
+                            BorderSide(color: addGreen, width: 3)),
+                        //errorMaxLines: 2,
+
+
+                        contentPadding:const EdgeInsets.only(top: 10, left: 15),
+                        // hintText: "Add card description...",
+                        //  hintStyle: GoogleFonts.openSans(
+                        //    fontSize: 12,
+                        //    color: ourWhite,
+                        //  )
+                      ),
+
+                      controller: _boardTitle,
+                      // style: GoogleFonts.openSans(
+                      //   color: Colors.white,
+                      // ),
+
+                    ),
                   ),
-                ),
+                  Expanded(
+                    flex:1,
+                    child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.description,
+                          color: Colors.white,
+                        )),
+                  ),
+                  Spacer(flex:1),
+                ],
               ),
             ),
+            ),
           ),
+          // SliverPersistentHeader(
+          //   floating: false,
+          //   pinned: true,
+          //   delegate: SliverAppBarDelegate(
+          //     listen: true,
+          //     minHeight: 62,
+          //     maxHeight: 150,
+          //     child: Container(
+          //       decoration: BoxDecoration(
+          //           color: lightBlack,
+          //           borderRadius: const BorderRadius.only(
+          //             topLeft: Radius.circular(10),
+          //             topRight: Radius.circular(10),
+          //           )),
+          //       child: Padding(
+          //         padding: const EdgeInsets.only(left: 15.0),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             Expanded(
+          //               flex:10,
+          //               child: TextField(
+          //                 minLines: 1,
+          //                 maxLines: 10,
+          //                 style: GoogleFonts.openSans(
+          //                   color: Colors.white,
+          //                 ),
+          //                 decoration: InputDecoration(
+          //                     fillColor: ourWhite,
+          //                     //filled: true,
+          //                     border: InputBorder.none,
+          //                     disabledBorder: InputBorder.none,
+          //                     focusedBorder: UnderlineInputBorder(
+          //                         borderSide:
+          //                         BorderSide(color: addGreen, width: 3)),
+          //                     //errorMaxLines: 2,
+          //
+          //
+          //                     contentPadding:const EdgeInsets.only(top: 10, left: 15),
+          //                    // hintText: "Add card description...",
+          //                    //  hintStyle: GoogleFonts.openSans(
+          //                    //    fontSize: 12,
+          //                    //    color: ourWhite,
+          //                    //  )
+          //                 ),
+          //
+          //                 controller: _boardTitle,
+          //                 // style: GoogleFonts.openSans(
+          //                 //   color: Colors.white,
+          //                 // ),
+          //
+          //               ),
+          //             ),
+          //             Expanded(
+          //               flex:1,
+          //               child: IconButton(
+          //                   onPressed: () {},
+          //                   icon: const Icon(
+          //                     Icons.description,
+          //                     color: Colors.white,
+          //                   )),
+          //             ),
+          //             Spacer(flex:1),
+          //           ],
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
 
           SliverToBoxAdapter(child: Consumer<ResponsiveHelp>(
             builder: (context, _, __) {
@@ -97,7 +198,7 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
                   builder: (context) {
                     return ListView.builder(
                       shrinkWrap: true,
-                      itemCount: sampleNodes.length,
+                      itemCount: oneBoard.wholeList.length,
                       itemBuilder: (context, index) {
                         if (index != sampleNodes.length - 1) {
                           return LongPressDraggable<ListTileSingleNodeModel>(

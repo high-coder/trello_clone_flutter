@@ -427,7 +427,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
                               ),
                               child: Row(
                                 children: [
-                                  Spacer(flex: 1),
+                                  const Spacer(flex: 1),
                                   Container(
                                     width: 50,
                                     height: 50,
@@ -440,56 +440,56 @@ class _DescriptionPageState extends State<DescriptionPage> {
                                       color: ourWhite,
                                     ),
                                   ),
-                                  Spacer(flex: 1),
+                                  const Spacer(flex: 1),
                                   //SizedBox(width: 15,),
                                   Text(
                                     "Add Attachment",
                                     style: GoogleFonts.openSans(
                                         color: ourWhite, fontSize: 15),
                                   ),
-                                  Spacer(flex: 1),
+                                  const Spacer(flex: 1),
                                 ],
                               ),
                             )
                           ],
                         ),
-                        SizedBox(
+                       const SizedBox(
                           height: 20,
                         ),
                         Container(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                               top: 12, bottom: 12, left: 5, right: 5),
                           width: size.width / 2.1,
                           decoration: BoxDecoration(
-                            color: Color(0xff111111),
+                            color: const Color(0xff111111),
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Row(
                             children: [
-                              Spacer(flex: 1),
+                              const Spacer(flex: 1),
                               Container(
                                 width: 50,
                                 height: 50,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(100),
-                                    color: Color(0xffc378e1)),
+                                    color:const Color(0xffc378e1)),
                                 child: Icon(
                                   Icons.person,
                                   color: ourWhite,
                                 ),
                               ),
-                              Spacer(flex: 1),
+                              const Spacer(flex: 1),
                               //SizedBox(width: 15,),
                               Text(
                                 "Members",
                                 style: GoogleFonts.openSans(
                                     color: ourWhite, fontSize: 15),
                               ),
-                              Spacer(flex: 1),
+                              const Spacer(flex: 1),
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                       ],
@@ -506,12 +506,12 @@ class _DescriptionPageState extends State<DescriptionPage> {
                 SliverToBoxAdapter(
                   key: dataKey,
                   child: Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     //height: 150,
                     width: size.width,
                     decoration: BoxDecoration(
-                        color: Color(0xff252525),
-                        border: Border.all(color: Color(0xff111111), width: 1)),
+                        color:const Color(0xff252525),
+                        border: Border.all(color:const Color(0xff111111), width: 1)),
                     child: TextFormField(
                       focusNode: _despFocus,
                       scrollController: _controllerTextField,
@@ -519,7 +519,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
                         //Scrollable.ensureVisible(dataKey.currentContext!);
                         // this is going to bring the focus on the text field
                         _controller.animateTo(_controller.offset + 150,
-                            duration: Duration(milliseconds: 400),
+                            duration:const Duration(milliseconds: 400),
                             curve: Curves.linear);
                         _instance.appBarTitle = "Edit Description...";
                         _respHelp.appBarStateDesp = AppBarStateDesp.AddDesp;
@@ -554,7 +554,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
                               color: ourWhite,
                             ),
                           ),
-                          contentPadding: EdgeInsets.only(top: 10, left: 15),
+                          contentPadding:const EdgeInsets.only(top: 10, left: 15),
                           hintText: "Add card description...",
                           hintStyle: GoogleFonts.openSans(
                             fontSize: 12,

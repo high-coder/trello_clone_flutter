@@ -18,7 +18,7 @@ dependencies:
   get:
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  fluttertoast: ^8.0.8
+  #fluttertoast: ^8.0.8
   measured_size: ^1.0.0
   boardview: ^0.2.2
   auto_size_text: ^3.0.0
