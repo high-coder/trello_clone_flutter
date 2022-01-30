@@ -71,6 +71,9 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
                   Expanded(
                     flex:10,
                     child: TextField(
+                      onTap: () {
+                        _respInstance.updateAppBar(AppBarState.AddCard)
+                      },
                       minLines: 1,
                       maxLines: 10,
                       style: GoogleFonts.openSans(
@@ -85,8 +88,6 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
                             borderSide:
                             BorderSide(color: addGreen, width: 3)),
                         //errorMaxLines: 2,
-
-
                         contentPadding:const EdgeInsets.only(top: 10, left: 15),
                         // hintText: "Add card description...",
                         //  hintStyle: GoogleFonts.openSans(
@@ -99,7 +100,6 @@ class _ListDataAddSliversState extends State<ListDataAddSlivers> {
                       // style: GoogleFonts.openSans(
                       //   color: Colors.white,
                       // ),
-
                     ),
                   ),
                   Expanded(
