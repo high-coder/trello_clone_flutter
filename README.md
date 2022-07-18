@@ -15,3 +15,6 @@ Step 3 : This would be syncing the data from HIVe to online using the Firebase D
 Progress Check : 
  21 Jan 2022 === Started with basic setup of the project and then starting with the UI of the project
  
+ 30 Jan 2022 === Completed a Nice Ui knockoff from actuall trello application 
+ 
+ Decided the end the project on just UI part alone
